@@ -1,0 +1,152 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background: linear-gradient(140deg, #f5f7fa 0%, #e7eef8 100%);
+  color: #1f2a37;
+}
+
+.page {
+  width: min(1100px, 94vw);
+  margin: 24px auto 48px auto;
+  display: grid;
+  gap: 18px;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #dbe4f0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(31, 42, 55, 0.08);
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
+form {
+  display: grid;
+  gap: 14px;
+}
+
+.mode-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.mode-picker label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0f6ff;
+  border: 1px solid #ceddf3;
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+.input-block {
+  display: grid;
+  gap: 8px;
+}
+
+textarea,
+input,
+button {
+  font: inherit;
+}
+
+textarea,
+input {
+  width: 100%;
+  border: 1px solid #c5d3e8;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fcfdff;
+}
+
+button {
+  width: fit-content;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #165dff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #134fd6;
+}
+
+.error {
+  margin-top: 8px;
+  border: 1px solid #f1b4b4;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff4f4;
+  color: #922525;
+}
+
+.results {
+  display: grid;
+  gap: 14px;
+}
+
+.step {
+  border: 1px solid #dbe4f0;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fbfdff;
+}
+
+.latex-inline {
+  margin: 6px 0;
+}
+
+.latex-block {
+  overflow-x: auto;
+}
+
+.vars {
+  margin: 0;
+  color: #3a4a61;
+}
+
+.copyright {
+  width: min(1100px, 94vw);
+  margin: 0 auto 24px auto;
+  text-align: center;
+  color: #43556f;
+  font-size: 0.95rem;
+}
+
+.copyright a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.copyright a:hover {
+  color: #165dff;
+}
+
+@media (max-width: 720px) {
+  .page {
+    width: 96vw;
+    margin-top: 14px;
+  }
+
+  .copyright {
+    width: 96vw;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+}
