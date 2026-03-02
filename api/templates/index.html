@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forma escalonada reducida por renglones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body>
+    <main class="page">
+      <section class="panel">
+        <h1>Forma escalonada reducida por renglones</h1>
+        <p>
+          Ingresa una matriz aumentada o un sistema lineal. La app aplica operaciones
+          elementales y muestra cada iteración hasta obtener la <strong>forma escalonada reducida por renglones</strong> (RREF).
+        </p>
+
+        <form method="post" novalidate>
+          <div class="mode-picker">
+            <label>
+              <input type="radio" name="mode" value="matrix" {% if mode != "equations" %}checked{% endif %} />
+              Matriz aumentada
+            </label>
+            <label>
+              <input type="radio" name="mode" value="equations" {% if mode == "equations" %}checked{% endif %} />
+              Sistema simbólico
+            </label>
+          </div>
+
+          <div id="matrix-block" class="input-block">
+            <label for="matrix_input">Matriz aumentada (un renglón por línea, valores separados por espacio o coma)</label>
+            <textarea id="matrix_input" name="matrix_input" rows="7">{{ matrix_input }}</textarea>
+          </div>
+
+          <div id="equations-block" class="input-block">
+            <label for="equations_input">Sistema (una ecuación por línea)</label>
+            <textarea id="equations_input" name="equations_input" rows="7">{{ equations_input }}</textarea>
+
+            <label for="variables_input">Variables (opcional, separadas por espacio o coma)</label>
+            <input id="variables_input" name="variables_input" value="{{ variables_input }}" />
+          </div>
+
+          <button type="submit">Calcular RREF</button>
+        </form>
+
+        {% if error %}
+        <div class="error">
+          {{ error }}
+        </div>
+        {% endif %}
+      </section>
+
+      {% if initial_matrix_latex %}
+      <section class="panel results">
+        <h2>Matriz inicial</h2>
+        <div class="latex-block">$$ {{ initial_matrix_latex }} $$</div>
+
+        {% if variables_used %}
+        <p class="vars">Variables usadas: {{ variables_used | join(", ") }}</p>
+        {% endif %}
+
+        <h2>Iteraciones</h2>
+        {% if steps %}
+          {% for step in steps %}
+          <article class="step">
+            <h3>Paso {{ loop.index }}</h3>
+            <p><strong>Operación:</strong></p>
+            <div class="latex-inline">\( {{ step.operation_latex }} \)</div>
+            <div class="latex-block">$$ {{ step.matrix_latex }} $$</div>
+          </article>
+          {% endfor %}
+        {% else %}
+          <p>La matriz ya estaba en forma escalonada reducida por renglones.</p>
+        {% endif %}
+
+        <h2>Resultado final</h2>
+        <div class="latex-block">$$ {{ final_matrix_latex }} $$</div>
+      </section>
+      {% endif %}
+    </main>
+    <footer class="copyright">
+      &copy; 2025,
+      <a href="https://isantosruiz.github.io/home/" target="_blank" rel="noopener noreferrer">
+        Ildeberto de los Santos Ruiz
+      </a>
+    </footer>
+
+    <script>
+      function syncInputBlocks() {
+        const mode = document.querySelector("input[name='mode']:checked")?.value;
+        const matrixBlock = document.getElementById("matrix-block");
+        const equationsBlock = document.getElementById("equations-block");
+        const isMatrix = mode === "matrix";
+        matrixBlock.style.display = isMatrix ? "grid" : "none";
+        equationsBlock.style.display = isMatrix ? "none" : "grid";
+      }
+
+      document.querySelectorAll("input[name='mode']").forEach((radio) => {
+        radio.addEventListener("change", syncInputBlocks);
+      });
+
+      syncInputBlocks();
+    </script>
+  </body>
+</html>
